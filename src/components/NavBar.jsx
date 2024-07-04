@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import MenuItems from './MenuItems';
-import { FaSearch, FaPlus, FaTimes } from 'react-icons/fa';
+import { FaSearch, FaPlus } from 'react-icons/fa';
 
 const MainContent = styled.div`
   margin-bottom: '3.75rem';
@@ -171,7 +171,6 @@ const NavBar = ({ toggleSearchVisibility }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [navbarVisible, setNavbarVisible] = useState(true);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -230,7 +229,7 @@ const NavBar = ({ toggleSearchVisibility }) => {
             </Primary>
             <SearchIcon>
   <li onClick={toggleSearchVisibility} style={{ cursor: 'pointer' }} aria-label="search">
-    {isSearchOpen ? <FaTimes style={{ color: 'white' }} /> : <FaSearch />}
+    <FaSearch />
   </li>
 </SearchIcon>
           </Flex>

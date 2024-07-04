@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import styled from 'styled-components';
 import Dropdown from './UI/Dropdown';
 import Checkbox from './UI/Checkbox';
@@ -98,13 +98,10 @@ const FilterSection = ({ onSortChange }) => {
   const [isSortOpen, setIsSortOpen] = useState(false);
   const [isWatchOpen, setIsWatchOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(true);
-  const [hoveredGenreIndex, setHoveredGenreIndex] = useState(null);
-  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
 
   const toggleSort = () => setIsSortOpen(!isSortOpen);
   const toggleWatch = () => setIsWatchOpen(!isWatchOpen);
   const toggleFilter = () => setIsFilterOpen(!isFilterOpen);
-  const toggleLanguage = () => setIsLanguageOpen(!isLanguageOpen);
 
   const handleSortChange = (value) => {
     onSortChange(value);
@@ -167,12 +164,10 @@ const FilterSection = ({ onSortChange }) => {
           {genres.map((genre, index) => (
             <GenreListItem
               key={index}
-              isHovered={hoveredGenreIndex === index}
              
             >
               <GenreLink
                 href="#"
-                isHovered={hoveredGenreIndex === index}
               >
                 {genre}
               </GenreLink>
