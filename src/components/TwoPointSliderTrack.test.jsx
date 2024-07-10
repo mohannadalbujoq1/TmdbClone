@@ -1,44 +1,40 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import TwoPointSliderTrack from './TwoPointSliderTrack';
+import React from "react";
 
-describe('TwoPointSliderTrack Component', () => {
-  const util = (<TwoPointSliderTrack min={0} max={100} step={10} />);
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
-  test('renders slider track container', () => {
+import TwoPointSliderTrack from "@src/components/TwoPointSliderTrack";
+
+const util = <TwoPointSliderTrack min={0} max={100} step={10} />;
+const setupUser = () => userEvent.setup();
+const { getByRole } = screen;
+describe("TwoPointSliderTrack Component", () => {
+
+  it("Should move the start handle on drag", async () => {
     render(util);
-    const sliderTrackContainer = screen.getByTestId('slider-track-container');
-    expect(sliderTrackContainer).toBeInTheDocument();
-  });
-
-  test('slider handle start moves on drag', async () => {
-    render(util);
-    const user = userEvent.setup();
-    const startHandle = screen.getByTestId('slider-handle-start');
-
+    const user = setupUser();
+    const startHandle = getByRole("slider", { name: "Start Handle" });
   
     await user.pointer([
-      { keys: '[MouseLeft>]', target: startHandle },
+      { keys: "[MouseLeft>]", target: startHandle },
       { coords: { x: 100 }, target: startHandle },
-      '[/MouseLeft]'
+      "[/MouseLeft]",
     ]);
-
-
-    expect(startHandle).toBeInTheDocument();
+  
+    expect(startHandle).toHaveAttribute("aria-valuenow", expect.any(String));
   });
-
-  test('slider handle end moves on drag', async () => {
+  
+  it("Should move the end handle on drag", async () => {
     render(util);
-    const user = userEvent.setup();
-    const endHandle = screen.getByTestId('slider-handle-end');
-
+    const user = setupUser();
+    const endHandle = getByRole("slider", { name: "End Handle" });
+  
     await user.pointer([
-      { keys: '[MouseLeft>]', target: endHandle },
+      { keys: "[MouseLeft>]", target: endHandle },
       { coords: { x: -100 }, target: endHandle },
-      '[/MouseLeft]'
+      "[/MouseLeft]",
     ]);
-
-    expect(endHandle).toBeInTheDocument();
+  
+    expect(endHandle).toHaveAttribute("aria-valuenow", expect.any(String));
   });
 });

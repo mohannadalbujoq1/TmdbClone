@@ -1,65 +1,65 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom';
-import axios from 'axios';
-import Movies from './Movies'; 
+import React from "react";
 
-jest.mock('axios');
-const mockSetLoadingProgress = jest.fn();
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import "@testing-library/jest-dom";
+import axios from "axios";
 
-    const util = (<Movies setIsLoading={() => {}} setLoadingProgress={mockSetLoadingProgress} isSearchVisible={false} isSearchActive={false} />);
+import Movies from "@src/components/Movies";
 
-const mockApiResponse = {
-  data: {
-    results: [
-      { id: 1, title: 'Movie Title 1', poster_path: '/path1.jpg', overview: 'Overview 1' },
-      { id: 2, title: 'Movie Title 2', poster_path: '/path2.jpg', overview: 'Overview 2' }
-    ]
-  }
+jest.mock("axios");
+
+const responses = {
+  initial: {
+    data: {
+      results: [
+        { id: 1, title: "Movie Title 1", poster_path: "/path1.jpg", overview: "Overview 1" },
+        { id: 2, title: "Movie Title 2", poster_path: "/path2.jpg", overview: "Overview 2" },
+      ],
+    },
+  },
+  loadMore: {
+    data: {
+      results: [{ id: 3, title: "Movie Title 3", poster_path: "/path3.jpg", overview: "Overview 3" }],
+    },
+  },
 };
-describe('Movies Component', () => {
-  beforeEach(() => {
-    axios.get.mockResolvedValue(mockApiResponse);
+
+function setup(isSearchVisible = false) {
+  axios.get.mockResolvedValue(responses.initial);
+  return render(
+    <Movies
+      setIsLoading={() => {}}
+      setLoadingProgress={jest.fn()}
+      isSearchVisible={isSearchVisible}
+      isSearchActive={false}
+    />
+  );
+}
+const { findByText, findByRole, findByPlaceholderText } = screen;
+
+describe("Movies Component", () => {
+  it("Should display the search component, when isSearchVisible is true, because user needs to search", async () => {
+    setup(true);
+    const searchInput = await findByPlaceholderText("Search for a movie, tv show, person...");
+    expect(searchInput).toBeInTheDocument();
   });
-  test('renders the search component when isSearchVisible is true', async () => {
-    const mockSetLoadingProgress = jest.fn();
-  
-    render(<Movies setIsLoading={() => {}} setLoadingProgress={mockSetLoadingProgress} isSearchVisible={true} isSearchActive={false} />);
-  
-    expect(screen.getByPlaceholderText('Search for a movie, tv show, person...')).toBeInTheDocument();
-  });
-  test('renders movies initially', async () => {
-   
-    render(util);
 
-    expect(await screen.findByText('Movie Title 1')).toBeInTheDocument();
+  it("Should show initial movies on component mount, because users expect to see some content", async () => {
+    setup();
+    const movieTitle = await findByText("Movie Title 1");
+    expect(movieTitle).toBeInTheDocument();
   });
 
-  test('loads more movies on "Load More" button click', async () => {
-   
-
-    render(util);
-
-    axios.get.mockResolvedValueOnce({
-      data: {
-        results: [
-          { id: 3, title: 'Movie Title 3', poster_path: '/path3.jpg', overview: 'Overview 3' }
-        ]
-      }
-    });
-
-    const loadMoreButton = screen.getByText('Load More');
+  it("Should load more movies when 'Load More' button is clicked, because users want to see more content", async () => {
+    setup();
+    axios.get.mockResolvedValueOnce(responses.loadMore);
+    const loadMoreButton = await findByRole("button", { name: "Load More" });
     await userEvent.click(loadMoreButton);
+    const newMovieTitle = await findByText("Movie Title 3");
+    expect(newMovieTitle).toBeInTheDocument();
+  });
 
-    expect(await screen.findByText('Movie Title 3')).toBeInTheDocument();
-  });
-  test('does not render the search component when isSearchVisible is false', () => {
-  
-    render(util);
-  
-    expect(screen.queryByPlaceholderText('Search for a movie, tv show, person...')).not.toBeInTheDocument();
-  });
   afterEach(() => {
     jest.clearAllMocks();
   });

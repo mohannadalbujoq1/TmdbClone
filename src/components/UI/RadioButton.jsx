@@ -1,18 +1,19 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+
+import styled from "styled-components";
 
 const StyledLabel = styled.label`
-  margin-bottom: .625rem;
+  margin-bottom: 0.625rem;
   display: block;
 `;
 
 const StyledInput = styled.input`
-  margin-right: .3125rem; /* Adjust spacing between radio button and label */
+  margin-right: 0.3125rem; /* Adjust spacing between radio button and label */
 `;
 
 const StyledSpan = styled.span`
   font-weight: normal;
-  margin-left: .3125rem;
+  margin-left: 0.3125rem;
 `;
 
 const RadioButton = ({ id, name, value, checked, onChange, label }) => {

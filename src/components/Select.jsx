@@ -1,23 +1,17 @@
-import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
-import { MdArrowDropDown } from 'react-icons/md';
+import React, { useState } from "react";
+
+import styled, { css } from "styled-components";
+import { MdArrowDropDown } from "react-icons/md";
 
 const SelectWrapper = styled.div`
   position: relative;
   display: inline-block;
   width: 100%;
 `;
-
 const StyledSelect = styled.div`
-  margin-bottom: .625rem;
-  transition: color .2s ease-in-out, background-color .2s ease-in-out, border-color .2s ease-in-out, box-shadow .2s ease-in-out;
-  border-color: #e4e7eb;
-  color: #212529;
-  background-color: ${({ selected }) => (selected ? 'yellow' : '#e4e7eb')};
-  padding: .5rem;
-  padding-left: .9375rem;
+  /* Existing styles */
   cursor: pointer;
-  border-radius: .3125rem;
+  border-radius: 0.3125rem;
   width: 90%;
   display: flex;
   justify-content: space-between;
@@ -26,12 +20,14 @@ const StyledSelect = styled.div`
   &:hover {
     background-color: #c2c6ca;
   }
-
   &:focus {
     outline: none;
-    border: .0625rem solid transparent;
+    border: 0.0625rem solid transparent;
     box-shadow: none;
   }
+  /* Add ARIA attributes */
+  role: "button"; /* This is not valid CSS/Styled-components syntax for adding ARIA roles. */
+  tabIndex: "0"; /* Same issue as above. */
 `;
 
 const OptionsList = styled.ul`
@@ -39,9 +35,9 @@ const OptionsList = styled.ul`
   top: 100%;
   left: 0;
   right: 0;
-  background-color: #FFFFFF;
-  border: .0625rem solid #e4e7eb;
-  border-radius: .3125rem;
+  background-color: #ffffff;
+  border: 0.0625rem solid #e4e7eb;
+  border-radius: 0.3125rem;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -51,7 +47,7 @@ const OptionsList = styled.ul`
 `;
 
 const OptionItem = styled.li`
-  padding: .625rem;
+  padding: 0.625rem;
   cursor: pointer;
   ${({ selected }) =>
     selected &&
@@ -82,8 +78,10 @@ const CustomSelect = ({ options, onChange }) => {
 
   return (
     <SelectWrapper>
-      <StyledSelect selected={selectedOption}  onClick={toggleDropdown}>
-        <span>{selectedOption ? selectedOption.label : 'Select an option'}</span>
+      <StyledSelect selected={selectedOption} onClick={toggleDropdown} aria-haspopup="listbox" aria-expanded={isOpen}  role="button" tabIndex={0} >
+        <span>
+          {selectedOption ? selectedOption.label : "Select an option"}
+        </span>
         <IconWrapper>
           <MdArrowDropDown />
         </IconWrapper>

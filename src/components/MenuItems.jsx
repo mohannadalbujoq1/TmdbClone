@@ -1,19 +1,20 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+
+import styled from "styled-components";
 
 const MenuItem = styled.a`
   color: #c9c9c9;
   text-decoration: none;
-  padding: .3125rem 0;
+  padding: 0.3125rem 0;
   @media (min-width: 48rem) {
-    padding: 0 .9375rem;
+    padding: 0 0.9375rem;
   }
 `;
 
-const MenuHeader = styled.div`
+const MenuHeader = styled.h2`
   font-size: 1.15em;
   text-transform: uppercase;
-  margin-bottom: .4375rem;
+  margin-bottom: 0.4375rem;
   font-weight: 700;
 `;
 

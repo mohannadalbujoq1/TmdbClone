@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import MenuItems from './MenuItems';
-import { FaSearch, FaPlus } from 'react-icons/fa';
+import React, { useState, useEffect } from "react";
+
+import styled from "styled-components";
+import { FaSearch, FaPlus, FaTimes } from "react-icons/fa";
+
+import MenuItems from "@src/components/MenuItems";
 
 const MainContent = styled.div`
-  margin-bottom: '3.75rem';
+  margin-bottom: "3.75rem";
 `;
 
 const Header = styled.header`
   background-color: #022c43;
   color: #fff;
-  padding: .9375rem 0;
-  box-shadow: 0 .125rem .25rem rgba(0,0,0,0.1);
+  padding: 0.9375rem 0;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -58,7 +60,7 @@ const Logo = styled.a`
   display: inline-block;
   margin-right: 1.4375rem;
   margin-left: -3.875rem;
-  margin-top: .25rem;
+  margin-top: 0.25rem;
   @media (max-width: 48rem) {
     margin-left: 25%;
   }
@@ -67,11 +69,11 @@ const Logo = styled.a`
 const Link = styled.a`
   display: flex;
   align-items: center;
-  color: #FFFFFF;
+  color: #ffffff;
   text-decoration: none;
   font-weight: 600;
   margin-right: 1.875rem;
-  font-size: 14.208px;
+  font-size: 0.888rem;
   font-family: "Source Sans Pro", Arial, sans-serif;
   @media (max-width: 48rem) {
     display: none;
@@ -96,7 +98,7 @@ const SearchIcon = styled.ul`
   padding-right: 1.25rem;
   margin: 0;
   align-items: center;
-  color: #09E8F0;
+  color: #09e8f0;
   svg {
     fill: currentColor;
     font-size: 1.35em;
@@ -116,19 +118,18 @@ const MenuIcon = styled.button`
   }
 `;
 
-const Menu = styled.div.attrs(({ isOpen }) => ({
-}))`
+const Menu = styled.div.attrs(({ isOpen }) => ({}))`
   display: none;
   @media (max-width: 48rem) {
-    display: ${props => props.isOpen ? 'flex' : 'none'};
+    display: ${(props) => (props.isOpen ? "flex" : "none")};
     flex-direction: column;
     position: absolute;
     top: 3.7125rem;
     left: 0;
     background-color: #022c43;
     width: 50%;
-    padding: .625rem 1.25rem;
-    box-shadow: 0 .125rem .25rem rgba(0,0,0,0.1);
+    padding: 0.625rem 1.25rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
     z-index: 1000;
     height: calc(100vh - 3.75rem);
     opacity: 0.9;
@@ -150,11 +151,11 @@ const Translate = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: .0625rem solid #fff;
-  border-radius: .1875rem;
-  padding: .0625rem;
-  padding-top: .1875rem;
-  padding-left: .125rem;
+  border: 0.0625rem solid #fff;
+  border-radius: 0.1875rem;
+  padding: 0.0625rem;
+  padding-top: 0.1875rem;
+  padding-left: 0.125rem;
   transition: linear 0.1s;
   color: #fff;
   font-weight: 500;
@@ -167,7 +168,7 @@ const Translate = styled.div`
   }
 `;
 
-const NavBar = ({ toggleSearchVisibility }) => {
+const NavBar = ({ toggleSearchVisibility, isSearchOpen }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [navbarVisible, setNavbarVisible] = useState(true);
@@ -187,34 +188,63 @@ const NavBar = ({ toggleSearchVisibility }) => {
       setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [lastScrollY]);
 
   return (
     <MainContent>
-      <Header style={{ top: navbarVisible ? '0' : '-60px' }}>
+      <Header style={{ top: navbarVisible ? "0" : "-3.75rem" }}>
         <Content>
           <NavWrapper>
             <Logo href="/">
-              <img src={`${process.env.PUBLIC_URL}/logo.svg`} alt="The Movie Database (TMDB)" width="154" height="20" />
+              <img
+                src={`${process.env.PUBLIC_URL}/logo.svg`}
+                alt="The Movie Database (TMDB)"
+                width="154"
+                height="20"
+              />
             </Logo>
             <Primary>
-              <li><Link href="/movie">Movies</Link></li>
-              <li><Link href="/tv">TV Shows</Link></li>
-              <li><Link href="/person">People</Link></li>
-              <li><Link href="#">More</Link></li>
+              <li>
+                <Link href="/movie">Movies</Link>
+              </li>
+              <li>
+                <Link href="/tv">TV Shows</Link>
+              </li>
+              <li>
+                <Link href="/person">People</Link>
+              </li>
+              <li>
+                <Link href="#">More</Link>
+              </li>
             </Primary>
-            <MenuIcon aria-label="menu" data-testid="menu-icon" onClick={toggleMobileMenu} >
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-menu">
-    <line x1="3" y1="12" x2="21" y2="12"></line>
-    <line x1="3" y1="6" x2="21" y2="6"></line>
-    <line x1="3" y1="18" x2="21" y2="18"></line>
-  </svg>
-</MenuIcon>
+            <MenuIcon
+  aria-label="menu"
+  onClick={toggleMobileMenu}
+  role="button"
+
+>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="feather feather-menu"
+              >
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            </MenuIcon>
           </NavWrapper>
           <Flex>
             <Primary>
@@ -227,14 +257,16 @@ const NavBar = ({ toggleSearchVisibility }) => {
                 <Translate>EN</Translate>
               </li>
             </Primary>
-            <SearchIcon>
-  <li onClick={toggleSearchVisibility} style={{ cursor: 'pointer' }} aria-label="search">
+            <SearchIcon onClick={toggleSearchVisibility} role="button" aria-label={isSearchOpen ? "close search" : "search"}>
+  {isSearchOpen ? (
+    <FaTimes style={{ color: "white" }} />
+  ) : (
     <FaSearch />
-  </li>
+  )}
 </SearchIcon>
           </Flex>
         </Content>
-        <Menu isOpen={isMobileMenuOpen} data-testid="menu-items">
+        <Menu isOpen={isMobileMenuOpen}>
           <MenuItems />
         </Menu>
       </Header>

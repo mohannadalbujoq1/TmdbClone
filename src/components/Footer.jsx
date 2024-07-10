@@ -1,11 +1,16 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+
+import styled from "styled-components";
 
 const FooterContainer = styled.footer`
   width: 100%;
   padding: 1.25rem 10%;
   box-sizing: border-box;
-  background-image: radial-gradient(at 70% top, #031d33 0%, rgba(3, 29, 51, 1) 30%);
+  background-image: radial-gradient(
+    at 70% top,
+    #031d33 0%,
+    rgba(3, 29, 51, 1) 30%
+  );
 
   @media (min-width: 48.0625rem) {
     padding: 1.25rem 32%;
@@ -16,7 +21,7 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  padding-top: .5rem;
+  padding-top: 0.5rem;
   padding-bottom: 5rem;
   color: #fff;
 `;
@@ -32,10 +37,10 @@ const NavItem = styled.div`
 const NavList = styled.ul`
   list-style: none;
   padding: 0;
-  margin: .3125rem 0 0 0;
+  margin: 0.3125rem 0 0 0;
   display: flex;
   flex-direction: column;
-  gap: .3125rem;
+  gap: 0.3125rem;
 `;
 
 const NavLink = styled.a`
@@ -58,10 +63,10 @@ const RoundedLink = styled.a`
     font-size: 1em;
     word-wrap: break-word;
     white-space: normal;
-    border: .125rem solid #fff;
-    border-radius: .3125rem;
-    padding: .625rem 1.125rem;
-    transition: linear .1s;
+    border: 0.125rem solid #fff;
+    border-radius: 0.3125rem;
+    padding: 0.625rem 1.125rem;
+    transition: linear 0.1s;
     font-weight: 700;
     text-transform: uppercase;
     width: 11.25rem;
@@ -70,7 +75,7 @@ const RoundedLink = styled.a`
 `;
 
 const Header = styled.h3`
-  margin-bottom: .3125rem;
+  margin-bottom: 0.3125rem;
   font-size: 1.1em;
   text-transform: uppercase;
 `;
@@ -94,17 +99,14 @@ const FooterLogo = styled.img`
     font-size: 1em;
     word-wrap: break-word;
     white-space: normal;
-    padding: .5rem 1rem;
-    transition: linear .1s;
+    padding: 0.5rem 1rem;
+    transition: linear 0.1s;
     font-weight: 700;
     text-transform: uppercase;
     width: 7.5rem;
     top: 0;
-
-
   }
 `;
-
 
 const Footer = () => {
   return (
@@ -113,42 +115,76 @@ const Footer = () => {
         <NavItem>
           <Header>The Basics</Header>
           <NavList>
-            <li><NavLink href="">About TMDB</NavLink></li>
-            <li><NavLink href="">Contact Us</NavLink></li>
-            <li><NavLink href="">Support Forums</NavLink></li>
-            <li><NavLink href="">API</NavLink></li>
-            <li><NavLink href="" rel="noopener">System Status</NavLink></li>
+            <li>
+              <NavLink href="">About TMDB</NavLink>
+            </li>
+            <li>
+              <NavLink href="">Contact Us</NavLink>
+            </li>
+            <li>
+              <NavLink href="">Support Forums</NavLink>
+            </li>
+            <li>
+              <NavLink href="">API</NavLink>
+            </li>
+            <li>
+              <NavLink href="" rel="noopener">
+                System Status
+              </NavLink>
+            </li>
           </NavList>
-          <FooterLogo src={`${process.env.PUBLIC_URL}/footerLogo.svg`} alt="Footer Logo" />
+          <FooterLogo
+            src={`${process.env.PUBLIC_URL}/footerLogo.svg`}
+            alt="Footer Logo"
+          />
 
-          <RoundedLink href="">
-            Join the Community
-            </RoundedLink>
-            
+          <RoundedLink href="">Join the Community</RoundedLink>
         </NavItem>
         <NavItem>
           <Header>Get Involved</Header>
           <NavList>
-            <li><NavLink href="/bible">Contribution Bible</NavLink></li>
-            <li><NavLink href="/movie/new">Add New Movie</NavLink></li>
-            <li><NavLink href="/tv/new">Add New TV Show</NavLink></li>
+            <li>
+              <NavLink href="/bible">Contribution Bible</NavLink>
+            </li>
+            <li>
+              <NavLink href="/movie/new">Add New Movie</NavLink>
+            </li>
+            <li>
+              <NavLink href="/tv/new">Add New TV Show</NavLink>
+            </li>
           </NavList>
         </NavItem>
         <NavItem>
           <Header>Community</Header>
           <NavList>
-            <li><NavLink href="/documentation/community/guidelines">Guidelines</NavLink></li>
-            <li><NavLink href="/discuss">Discussions</NavLink></li>
-            <li><NavLink href="/leaderboard">Leaderboard</NavLink></li>
+            <li>
+              <NavLink href="/documentation/community/guidelines">
+                Guidelines
+              </NavLink>
+            </li>
+            <li>
+              <NavLink href="/discuss">Discussions</NavLink>
+            </li>
+            <li>
+              <NavLink href="/leaderboard">Leaderboard</NavLink>
+            </li>
           </NavList>
         </NavItem>
         <NavItem>
           <Header>Legal</Header>
           <NavList>
-            <li><NavLink href="/terms-of-use">Terms of Use</NavLink></li>
-            <li><NavLink href="/api-terms-of-use">API Terms of Use</NavLink></li>
-            <li><NavLink href="/privacy-policy">Privacy Policy</NavLink></li>
-            <li><NavLink href="/dmca-policy">DMCA Policy</NavLink></li>
+            <li>
+              <NavLink href="/terms-of-use">Terms of Use</NavLink>
+            </li>
+            <li>
+              <NavLink href="/api-terms-of-use">API Terms of Use</NavLink>
+            </li>
+            <li>
+              <NavLink href="/privacy-policy">Privacy Policy</NavLink>
+            </li>
+            <li>
+              <NavLink href="/dmca-policy">DMCA Policy</NavLink>
+            </li>
           </NavList>
         </NavItem>
       </Nav>

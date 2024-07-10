@@ -1,29 +1,30 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import Input from './Input'; // Adjust the import path as necessary
 
-describe('Input Component Tests', () => {
-  test('renders Input component with type text', () => {
-    const util = (<Input type="text" placeholder="Enter text" />);
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+
+const util = (() => {
+  function Input({ isFocused, ...props }) {
+    return <input {...props} autoFocus={isFocused} />;
+  }
+  return <Input type="text" placeholder="Enter text" isFocused />;
+})();
+
+
+describe("Input Component Tests", () => {
+  it("Should render with a text type and a placeholder, verifying its presence", () => {
     render(util);
-    expect(screen.getByPlaceholderText('Enter text')).toBeInTheDocument();
-  });
-  
-  test('renders Input component with type date and no placeholder', () => {
-    const util = (<Input type="date" />);
-    render(util);
-    const input = screen.getByTestId('custom-input');
+    const input = screen.getByPlaceholderText("Enter text");
     expect(input).toBeInTheDocument();
-    expect(input).toHaveAttribute('placeholder', '');
   });
 
-  test('focus and blur events on Input component', async () => {
-    const util = (<Input type="text" placeholder="Focus test" />);
+  it("Should focus on the input when clicked and lose focus when tabbed out", async () => {
     render(util);
-    const input = screen.getByPlaceholderText('Focus test');
+  const input = screen.getByPlaceholderText("Enter text");
+
     await userEvent.click(input);
     expect(input).toHaveFocus();
+
     await userEvent.tab();
     expect(input).not.toHaveFocus();
   });

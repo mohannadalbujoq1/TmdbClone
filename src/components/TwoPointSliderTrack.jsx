@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import styled from "styled-components";
 
 const SliderTrackContainer = styled.div`
   position: relative;
@@ -21,7 +21,8 @@ const SliderTicks = styled.ul`
 
 const Tick = styled.li`
   position: relative;
-  height: ${({ isLarge, tickHeight }) => (isLarge ? tickHeight.large : tickHeight.small)}px;
+  height: ${({ isLarge, tickHeight }) =>
+    isLarge ? tickHeight.large : tickHeight.small}px;
   width: 0.0625rem;
   background-color: black;
   margin-top: 0.3125rem;
@@ -68,7 +69,14 @@ const SliderHandle = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-const TwoPointSliderTrack = ({ min = 0, max = 500, step = 50, tickHeight = { small: 10, large: 20 }, numberMargin = 100, ...rest }) => {
+const TwoPointSliderTrack = ({
+  min = 0,
+  max = 500,
+  step = 50,
+  tickHeight = { small: 10, large: 20 },
+  numberMargin = 100,
+  ...rest
+}) => {
   const [selectedRange, setSelectedRange] = useState({ start: min, end: min });
 
   const handleMouseDown = (e, bound) => {
@@ -85,7 +93,7 @@ const TwoPointSliderTrack = ({ min = 0, max = 500, step = 50, tickHeight = { sma
       setSelectedRange((prevRange) => {
         let newStart = prevRange.start;
         let newEnd = prevRange.end;
-        if (bound === 'start') {
+        if (bound === "start") {
           newStart = Math.max(min, Math.min(nearestTickValue, prevRange.end));
         } else {
           newEnd = Math.max(prevRange.start, Math.min(nearestTickValue, max));
@@ -95,40 +103,58 @@ const TwoPointSliderTrack = ({ min = 0, max = 500, step = 50, tickHeight = { sma
     };
 
     const handleMouseUp = () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
     };
 
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
   };
 
   const ticks = [];
   for (let i = min; i <= max; i += step) {
     ticks.push(
-      <Tick key={i} isLarge={i % numberMargin === 0} tickHeight={tickHeight} title={i}>
+      <Tick
+        key={i}
+        isLarge={i % numberMargin === 0}
+        tickHeight={tickHeight}
+        title={i}
+      >
         {i % numberMargin === 0 && <TickNumber>{i}</TickNumber>}
       </Tick>
     );
   }
 
   return (
-    <SliderTrackContainer data-testid="slider-track-container">
+    <SliderTrackContainer>
       <SliderTicks>{ticks}</SliderTicks>
       <SliderBaseLine />
-      <SliderSelectedRange start={selectedRange.start} end={selectedRange.end} max={max} />
-      <SliderHandle
-        position={selectedRange.start}
+      <SliderSelectedRange
+        start={selectedRange.start}
+        end={selectedRange.end}
         max={max}
-        onMouseDown={(e) => handleMouseDown(e, 'start')}
-        data-testid="slider-handle-start"
       />
       <SliderHandle
-        position={selectedRange.end}
-        max={max}
-        onMouseDown={(e) => handleMouseDown(e, 'end')}
-        data-testid="slider-handle-end" 
-      />
+  role="slider"
+  aria-valuenow={selectedRange.start}
+  aria-valuemin={min}
+  aria-valuemax={max}
+  aria-label="Start Handle"
+  position={selectedRange.start}
+  max={max}
+  onMouseDown={(e) => handleMouseDown(e, "start")}
+/>
+
+<SliderHandle
+  role="slider"
+  aria-valuenow={selectedRange.end}
+  aria-valuemin={min}
+  aria-valuemax={max}
+  aria-label="End Handle"
+  position={selectedRange.end}
+  max={max}
+  onMouseDown={(e) => handleMouseDown(e, "end")}
+/>
     </SliderTrackContainer>
   );
 };

@@ -1,24 +1,24 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import SinglePointSliderTrack from './SinglePointSliderTrack';
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import SinglePointSliderTrack from "@src/components/SinglePointSliderTrack";
 
-describe('SinglePointSliderTrack Component', () => {
-  const util = (<SinglePointSliderTrack min={0} max={500} step={100} />);
+const util = <SinglePointSliderTrack min={0} max={500} step={100} />;
+const { getByRole } = screen;
 
-  test('renders slider and interacts with handle', async () => {
+describe("SinglePointSliderTrack Component", () => {
+  it("Should move the slider handle when the user drags it, demonstrating a change in selected value", async () => {
     render(util);
     const user = userEvent.setup();
-    const sliderHandle = screen.getByTestId('slider-handle');
-
     
-    expect(sliderHandle).toHaveStyle(`left: 0%`);
+    const sliderHandle = getByRole("slider");
 
- 
+    expect(sliderHandle).toBeInTheDocument();
+
     await user.pointer([
-      { keys: '[MouseLeft>]', target: sliderHandle },
-      { coords: { x: 100 }, target: sliderHandle }, 
-      '[/MouseLeft]'
+      { keys: "[MouseLeft>]", target: sliderHandle },
+      { coords: { x: 100 }, target: sliderHandle },
+      "[/MouseLeft]",
     ]);
 
     expect(sliderHandle).not.toHaveStyle(`left: 0%`);

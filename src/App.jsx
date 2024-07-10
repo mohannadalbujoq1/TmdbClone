@@ -1,20 +1,24 @@
-import './App.css';
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import NavBar from './components/NavBar';
-import Movies from './components/Movies';
-import FilterSection from './components/FilterSection';
-import Search from './components/Search';
-import Footer from './components/Footer';
-import LoadingBar from './components/UI/LoadingBar';
+import React from "react";
+
+import styled from "styled-components";
+
+import NavBar from "@src/components/NavBar";
+import Movies from "@src/components/Movies";
+import FilterSection from "@src/components/FilterSection";
+import Search from "@src/components/Search";
+import Footer from "@src/components/Footer";
+import LoadingBar from "@src/components/UI/LoadingBar";
+
+import "@src/App.css";
 
 const MainContainer = styled.div`
   display: flex;
-  flex-direction: ${({ windowWidth }) => (windowWidth > 768 ? 'row' : 'column')};
+  flex-direction: column;
   padding-left: 2%;
   padding-right: 2%;
   padding-top: 4rem;
   @media (min-width: 768px) {
+    flex-direction: row;
     padding-left: 15%;
     padding-right: 15%;
   }
@@ -22,26 +26,22 @@ const MainContainer = styled.div`
 
 const ContentContainer = styled.div`
   display: flex;
-  flex-direction: ${({ windowWidth }) => (windowWidth > 768 ? 'row' : 'column')};
+  flex-direction: column;
   justify-content: space-between;
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
 `;
 
 function App() {
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [sortOption, setSortOption] = useState('popularity.desc');
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [initialLoadComplete, setInitialLoadComplete] = useState(false);
-  const [loadingProgress, setLoadingProgress] = useState(0);
-  const [isSearchActive, setIsSearchActive] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const [isSearchVisible, setIsSearchVisible] = React.useState(false);
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [sortOption, setSortOption] = React.useState("popularity.desc");
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoaded, setIsLoaded] = React.useState(false);
+  const [initialLoadComplete, setInitialLoadComplete] = React.useState(false);
+  const [loadingProgress, setLoadingProgress] = React.useState(0);
+  const [isSearchActive, setIsSearchActive] = React.useState(false);
 
   const toggleSearchVisibility = () => setIsSearchVisible(!isSearchVisible);
 
@@ -61,12 +61,17 @@ function App() {
         isLoaded={isLoaded}
         initialLoadComplete={initialLoadComplete}
         loadingProgress={loadingProgress}
+        role="progressbar" 
       />
-      <NavBar toggleSearchVisibility={toggleSearchVisibility} />
-      <MainContainer windowWidth={windowWidth}>
-        {isSearchVisible && <Search onSearch={handleSearch} />}
-        <ContentContainer windowWidth={windowWidth}>
-          <FilterSection onSortChange={handleSortChange} />
+      <NavBar
+        toggleSearchVisibility={toggleSearchVisibility}
+        isSearchOpen={isSearchVisible}
+        role="navigation" 
+      />
+      <MainContainer role="main"> 
+        {isSearchVisible && <Search onSearch={handleSearch} role="search" />} 
+        <ContentContainer>
+          <FilterSection onSortChange={handleSortChange}/> 
           <Movies
             searchQuery={searchQuery}
             sortOption={sortOption}
@@ -79,7 +84,7 @@ function App() {
           />
         </ContentContainer>
       </MainContainer>
-      <Footer />
+      <Footer role="contentinfo" /> 
     </React.Fragment>
   );
 }

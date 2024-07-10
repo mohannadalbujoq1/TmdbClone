@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { FaSearch, FaTimes } from 'react-icons/fa';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+
+import styled from "styled-components";
+import { FaSearch, FaTimes } from "react-icons/fa";
+import axios from "axios";
 
 const SearchContainer = styled.div`
   position: absolute;
@@ -64,20 +65,19 @@ const StyledFaTimes = styled(FaTimes)`
 const SuggestionsContainer = styled.div`
   width: 100%;
   background: white;
-  border: 1px solid #ddd;
-  max-height: 200px;
+  border: 0.0625rem solid #ddd;
+  max-height: 12.5rem;
   overflow-y: auto;
   margin-top: 1rem;
   z-index: 1001;
-  
-  `;
+`;
 
 const SuggestionItem = styled.div`
   padding: 0.5rem;
   padding-bottom: 1rem;
-   padding-top: 1rem;
+  padding-top: 1rem;
   cursor: pointer;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 0.0625rem solid #ddd;
   padding-left: 19.75rem;
   &:hover {
     background-color: #f0f0f0;
@@ -85,38 +85,41 @@ const SuggestionItem = styled.div`
 `;
 
 function Search({ onSearch }) {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const [errorMessage, setErrorMessage] = useState(''); 
+  const [errorMessage, setErrorMessage] = useState("");
   const apiKey = "56c6dc3c65ce55e8a0215b70ab55345d";
 
   useEffect(() => {
-    setErrorMessage(''); 
+    setErrorMessage("");
     if (query.length > 2) {
       axios
-        .get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}`)
+        .get(
+          `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}`
+        )
         .then((response) => {
           setSuggestions(response.data.results);
         })
         .catch((error) => {
-          console.error('Failed to fetch search results:', error);
-          setErrorMessage('Failed to fetch search results. Please try again.'); 
+          console.error("Failed to fetch search results:", error);
+          setErrorMessage("Failed to fetch search results. Please try again.");
         });
     } else {
       setSuggestions([]);
     }
   }, [query, apiKey]);
 
-
   useEffect(() => {
     if (query.length > 2) {
       axios
-        .get(`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}`)
+        .get(
+          `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${query}`
+        )
         .then((response) => {
           setSuggestions(response.data.results);
         })
         .catch((error) => {
-          console.error('Failed to fetch search results:', error);
+          console.error("Failed to fetch search results:", error);
         });
     } else {
       setSuggestions([]);
@@ -128,14 +131,14 @@ function Search({ onSearch }) {
   };
 
   const handleClearSearch = () => {
-    setQuery('');
-    onSearch('');
+    setQuery("");
+    onSearch("");
     setSuggestions([]);
   };
 
   const handleSuggestionClick = (title) => {
     setQuery(title);
-    onSearch(title); 
+    onSearch(title);
     setSuggestions([]);
   };
 
@@ -149,10 +152,17 @@ function Search({ onSearch }) {
           onChange={handleChange}
           placeholder="Search for a movie, tv show, person..."
         />
-{query && <StyledFaTimes onClick={handleClearSearch} data-testid="clear-button" />}
+        {query && (
+          <StyledFaTimes
+            onClick={handleClearSearch}
+          />
+        )}
       </SearchInputContainer>
-      {errorMessage && ( // Step 3: Display error message
-        <div data-testid="search-error" style={{ color: 'red', marginTop: '1rem' }}>
+      {errorMessage && (
+        <div
+          style={{ color: "red", marginTop: "1rem" }}
+          role="alert" 
+        >
           {errorMessage}
         </div>
       )}

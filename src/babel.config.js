@@ -5,6 +5,5 @@ module.exports = {
   ],
   plugins: [
     "@babel/plugin-proposal-private-property-in-object"
-    // Add any other Babel plugins your project needs
   ]
 };

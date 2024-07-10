@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import RadioButton from './UI/RadioButton'; 
+import React, { useState } from "react";
+
+import RadioButton from "@src/components/UI/RadioButton";
 
 const RadioButtonGroup = () => {
-  const [selectedOption, setSelectedOption] = useState('everything');
+  const [selectedOption, setSelectedOption] = useState("everything");
 
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
@@ -10,12 +11,11 @@ const RadioButtonGroup = () => {
 
   return (
     <div className="filter">
-
       <RadioButton
         id="show_me_everything"
         name="show_me"
         value="everything"
-        checked={selectedOption === 'everything'}
+        checked={selectedOption === "everything"}
         onChange={handleChange}
         label="Everything"
       />
@@ -23,7 +23,7 @@ const RadioButtonGroup = () => {
         id="show_me_not_seen"
         name="show_me"
         value="unwatched"
-        checked={selectedOption === 'unwatched'}
+        checked={selectedOption === "unwatched"}
         onChange={handleChange}
         label="Movies I Haven't Seen"
         disabled
@@ -32,7 +32,7 @@ const RadioButtonGroup = () => {
         id="show_me_seen"
         name="show_me"
         value="watched"
-        checked={selectedOption === 'watched'}
+        checked={selectedOption === "watched"}
         onChange={handleChange}
         label="Movies I Have Seen"
         disabled

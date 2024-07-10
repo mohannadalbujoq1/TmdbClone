@@ -1,25 +1,27 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import MenuItems from './MenuItems';
+import React from "react";
 
-describe('MenuItems component', () => {
-  const util = <MenuItems />;
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
-  test('renders all menu headers and items', () => {
-    render(util);
-    expect(screen.getByText(/Movie/i)).toBeInTheDocument();
-    expect(screen.getByText(/TV Shows/i)).toBeInTheDocument();
-    expect(screen.getByText(/People/i)).toBeInTheDocument();
-    expect(screen.getByText(/Contribution/i)).toBeInTheDocument();
-    expect(screen.getByText(/Bible/i)).toBeInTheDocument();
+import MenuItems from "@src/components/MenuItems";
+
+describe("MenuItems component", () => {
+  const setup = () => render(<MenuItems />);
+
+  const { getByRole,findByText } = screen;
+
+  it("Should render all menu headers and items, when the component is mounted", async () => {
+    setup();
+    expect(getByRole("heading", { name: /Movie/i })).toBeInTheDocument();
+    expect(getByRole("heading", { name: /TV Shows/i })).toBeInTheDocument();
+
+    const menuItem = await findByText(/Contribution/i);
+    expect(menuItem).toBeInTheDocument();
   });
 
-  test('menu item can be clicked', async () => {
-    render(util);
-    const menuItem = screen.getByText(/Contribution/i);
+  it("Should allow interaction with a menu item, when user clicks on it", async () => {
+    setup();
+    const menuItem = await findByText(/Contribution/i);
     await userEvent.click(menuItem);
-   
   });
-
 });

@@ -1,25 +1,25 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+
+import styled from "styled-components";
 
 const StyledSubHeader = styled.h3`
   display: inline-flex;
   align-items: center;
   width: 100%;
-  font-size: .978rem;
+  font-size: 0.978rem;
   font-weight: 100;
-  background-color: rgba(var(--tmdbDarkBlue), 1);
-  color: #000000BE;
-  font-family: 'Source Sans Pro', Arial, sans-serif;
+  color: #000000be;
+  font-family: "Source Sans Pro", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  height: .0625rem;
-   margin-bottom: 1.25rem;
-   margin-left: .125rem;
+  height: 0.0625rem;
+  margin-bottom: 1.25rem;
+  margin-left: 0.125rem;
 `;
 
 const IconSpan = styled.span`
-  margin-left: .375rem;
+  margin-left: 0.375rem;
   background-image: ${({ iconUrl }) => `url(${iconUrl})`};
-  opacity: .4;
+  opacity: 0.4;
   display: inline-flex;
   align-items: center;
   justify-content: center;
