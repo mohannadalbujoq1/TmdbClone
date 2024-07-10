@@ -9,6 +9,8 @@ import Movies from "@src/components/Movies";
 
 jest.mock("axios");
 
+const user = userEvent.setup();
+
 const responses = {
   initial: {
     data: {
@@ -55,7 +57,7 @@ describe("Movies Component", () => {
     setup();
     axios.get.mockResolvedValueOnce(responses.loadMore);
     const loadMoreButton = await findByRole("button", { name: "Load More" });
-    await userEvent.click(loadMoreButton);
+    await user.click(loadMoreButton);
     const newMovieTitle = await findByText("Movie Title 3");
     expect(newMovieTitle).toBeInTheDocument();
   });

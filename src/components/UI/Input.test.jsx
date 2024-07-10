@@ -10,6 +10,7 @@ const util = (() => {
   return <Input type="text" placeholder="Enter text" isFocused />;
 })();
 
+const user = userEvent.setup();
 
 describe("Input Component Tests", () => {
   it("Should render with a text type and a placeholder, verifying its presence", () => {
@@ -22,10 +23,10 @@ describe("Input Component Tests", () => {
     render(util);
   const input = screen.getByPlaceholderText("Enter text");
 
-    await userEvent.click(input);
+    await user.click(input);
     expect(input).toHaveFocus();
 
-    await userEvent.tab();
+    await user.tab();
     expect(input).not.toHaveFocus();
   });
 });

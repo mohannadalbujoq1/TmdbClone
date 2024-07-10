@@ -6,13 +6,16 @@ import userEvent from "@testing-library/user-event";
 import TwoPointSliderTrack from "@src/components/TwoPointSliderTrack";
 
 const util = <TwoPointSliderTrack min={0} max={100} step={10} />;
-const setupUser = () => userEvent.setup();
+
 const { getByRole } = screen;
+
+const user = userEvent.setup();
+
 describe("TwoPointSliderTrack Component", () => {
 
   it("Should move the start handle on drag", async () => {
     render(util);
-    const user = setupUser();
+
     const startHandle = getByRole("slider", { name: "Start Handle" });
   
     await user.pointer([
@@ -26,7 +29,6 @@ describe("TwoPointSliderTrack Component", () => {
   
   it("Should move the end handle on drag", async () => {
     render(util);
-    const user = setupUser();
     const endHandle = getByRole("slider", { name: "End Handle" });
   
     await user.pointer([

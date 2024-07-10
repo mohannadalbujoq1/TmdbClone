@@ -5,13 +5,15 @@ import userEvent from "@testing-library/user-event";
 
 import MenuItems from "@src/components/MenuItems";
 
+const user = userEvent.setup();
+
 describe("MenuItems component", () => {
-  const setup = () => render(<MenuItems />);
+  const util = (<MenuItems />);
 
   const { getByRole,findByText } = screen;
 
   it("Should render all menu headers and items, when the component is mounted", async () => {
-    setup();
+    render(util);
     expect(getByRole("heading", { name: /Movie/i })).toBeInTheDocument();
     expect(getByRole("heading", { name: /TV Shows/i })).toBeInTheDocument();
 
@@ -20,8 +22,8 @@ describe("MenuItems component", () => {
   });
 
   it("Should allow interaction with a menu item, when user clicks on it", async () => {
-    setup();
+    render(util);
     const menuItem = await findByText(/Contribution/i);
-    await userEvent.click(menuItem);
+    await user.click(menuItem);
   });
 });

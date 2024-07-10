@@ -5,11 +5,12 @@ import SinglePointSliderTrack from "@src/components/SinglePointSliderTrack";
 
 const util = <SinglePointSliderTrack min={0} max={500} step={100} />;
 const { getByRole } = screen;
+const user = userEvent.setup();
 
 describe("SinglePointSliderTrack Component", () => {
   it("Should move the slider handle when the user drags it, demonstrating a change in selected value", async () => {
     render(util);
-    const user = userEvent.setup();
+
     
     const sliderHandle = getByRole("slider");
 

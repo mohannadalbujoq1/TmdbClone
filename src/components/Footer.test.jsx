@@ -5,6 +5,7 @@ import userEvent from "@testing-library/user-event";
 import Footer from "@src/components/Footer";
 
 const util = (<Footer />);
+const user = userEvent.setup();
 
 const { getByText,findByText } = screen;
 describe("Footer component", () => {
@@ -17,6 +18,6 @@ describe("Footer component", () => {
   it("Should allow clicking on footer links, when user interacts with them", async () => {
     render(util);
     const aboutLink = await findByText("About TMDB");
-    await userEvent.click(aboutLink);
+    await user.click(aboutLink);
   });
 });
